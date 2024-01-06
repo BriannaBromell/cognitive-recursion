@@ -1,7 +1,8 @@
 #pip install auto-gptq
 #pip install flash-attn --no-build-isolation
 #pip install transformers, gradio, nltk, spacy, fastcoref, sentence_transformers, chromadb
-
+#pip install --force-reinstall git+https://github.com/huggingface/transformers
+#pip install --force-reinstall transformers[sentencepiece]
 
 
 import time #monotonic high precision time for generate_timeID()
@@ -10,52 +11,28 @@ from threading import Thread
 from datetime import datetime, timedelta #for generate_timeID()
 from difflib import SequenceMatcher #MemoryProcessor_chunkcreation
 
-from fastcoref import spacy_component, FCoref, LingMessCoref #from fastcoref import LingMessCoref#model = LingMessCoref(device='cuda:0')
-import spacy
-
-import csv #CSV
 from io import StringIO #CSV
-
 import torch
 import torch.nn as nn
 import torch.quantization
-
-'''import transformers as transformersVersion
-from distutils.version import LooseVersion
-# Get the currently installed Transformers version
-installed_version = transformersVersion.__version__
-# Get the desired version from the URL
-desired_version = "git+https://github.com/huggingface/transformers"
-# Compare the versions using LooseVersion for compatibility handling
-if LooseVersion(installed_version) < LooseVersion(desired_version):
-    print(f"Updating Transformers from {installed_version} to {desired_version}")
-    # Install the desired version using pip
-    import subprocess
-    subprocess.run(["pip", "install", desired_version])
-else:
-    print(f"Transformers is already up-to-date: {installed_version}")'''
-#pip install --force-reinstall git+https://github.com/huggingface/transformers
-#pip install --force-reinstall transformers[sentencepiece]
 from transformers import GenerationConfig, BitsAndBytesConfig, AutoModel, AutoTokenizer, AutoModelForCausalLM, AutoConfig, AutoModelForSeq2SeqLM, TextIteratorStreamer
 
 # Set HUGGINGFACE_HUB_CACHE before import
 os.environ["HUGGINGFACE_HUB_CACHE"] = "./models"
 # Set TRANSFORMERS_CACHE before import
 os.environ["TRANSFORMERS_CACHE"] = "./models"
-#MEMORY
-    #NLP
-
 debugging_flag=True
-
-
-
-
 
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer
 from nltk import ne_chunk, Tree, pos_tag, word_tokenize, sent_tokenize
+
     #NLP coreference-resolution pronouns to nouns
+import spacy
+from fastcoref import spacy_component, FCoref, LingMessCoref #from fastcoref import LingMessCoref#model = LingMessCoref(device='cuda:0')
+
+import csv #CSV
 from spacy.language import Language# custom language component pipe item @Language.component SpaCy_CustomComponent_SentenceSeparator
     #Database
 from sentence_transformers import SentenceTransformer #embeddings
@@ -68,8 +45,6 @@ import gradio as gr
 import queue
 import asyncio, aiofiles
 import concurrent.futures, multiprocessing
-
-
 
 '''|-START-| COGNITIVE ABILITIES INITIALIZATION |-------|'''
 import chromadb#memory database
@@ -1467,16 +1442,6 @@ async def main():
 if __name__ == "__main__":
 
 
-    #import gradio_client as grc
-    #client = grc.Client("freddyaboulton/english-to-german")
-    #grc.deploy(discord_bot_token="MTE4NTM0NzQyNTY3ODkzNDAxNg.GlAu3H.siMp0ulTNLay-Eqy0m6zHUiIPn5MoWTylLBNDY")
-
-    #client.deploy_discord(api_names=['german'])
-
-    #grc.Client("https://discord.com/api/oauth2/authorize?client_id=1185347425678934016&permissions=67584&scope=bot").deploy_discord(discord_bot_token="MTE4NTM0NzQyNTY3ODkzNDAxNg.GlAu3H.siMp0ulTNLay-Eqy0m6zHUiIPn5MoWTylLBNDY")
-
     success = gradio_gui()
-    #client.run()
-
     # Run the asynchronous main function
     #asyncio.run(main())
