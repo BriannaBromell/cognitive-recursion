@@ -11,6 +11,8 @@ from threading import Thread
 from datetime import datetime, timedelta #for generate_timeID()
 from difflib import SequenceMatcher #MemoryProcessor_chunkcreation
 
+from config import config
+
 from io import StringIO #CSV
 import torch
 import torch.nn as nn
